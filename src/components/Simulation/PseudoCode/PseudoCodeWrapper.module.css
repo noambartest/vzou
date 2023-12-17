@@ -1,0 +1,34 @@
+.div-side {
+  font-family: "Roboto", sans-serif;
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+}
+.aside-side {
+  background-color: #ecfccb;
+  min-width: fit-content;
+}
+.button-div {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 10;
+}
+.button-side {
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 100%;
+  border-color: #d9f99d;
+  border-width: 3px;
+  width: 40px;
+  height: 40px;
+}
+.button-side:hover {
+  background-color: #84cc16;
+}
+
+.headLineSide {
+  font-size: large;
+  font-weight: bold;
+  margin-left: 4rem;
+}

@@ -1,0 +1,25 @@
+.s_ul {
+  width: 100%;
+  height: 200px;
+  list-style: none;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.s_li {
+  background: #84cc16;
+  height: 30px;
+  width: 32px;
+  border: solid 1px black;
+}
+
+.s_ul,
+.s_li {
+  list-style: none;
+  color: #000000;
+  text-align: center;
+  line-height: 30px;
+  font-weight: 700;
+  display: inline-block;
+  height: 30px;
+}

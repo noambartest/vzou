@@ -1,0 +1,76 @@
+.example {
+  --black: #000000;
+  --white: #fafafa;
+  --lime: #84cc16;
+
+  --background: var(--white);
+  --accent: var(--lime);
+
+  color: var(--accent);
+}
+
+.s_ul {
+  /* display: flex; */
+  width: 100%;
+  height: 200px;
+  list-style: none;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.s_li {
+  /* flex-direction: row; */
+  background: var(--accent);
+  height: 40px;
+  width: 70px;
+  border: solid 1px black;
+}
+
+.s_ul,
+.s_li {
+  list-style: none;
+  color: #000000;
+  text-align: center;
+  line-height: 40px;
+  font-weight: 700;
+  display: inline-block;
+  height: 40px;
+}
+
+.s_button {
+  background: var(--accent);
+  color: var(--background);
+  border: none;
+  padding: 15px 25px;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 150px;
+}
+
+.topArrow {
+  width: 2.5rem;
+  margin-left: 1.5rem;
+  transform: rotate(45deg);
+  /* margin-bottom:-3rem; */
+}
+
+.bottomArrow {
+  width: 2.5rem;
+  transform: rotate(-135deg);
+  /* margin-bottom:-3rem; */
+}
+
+.topText {
+  width: 3rem;
+  /* margin-left: -2rem; */
+  font: bold 20px sans-serif;
+}
+
+.bottomText {
+  width: 3rem;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  font: bold 20px sans-serif;
+}
