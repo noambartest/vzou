@@ -67,6 +67,7 @@
     "eject": "react-scripts eject",
     "lint:check": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
+    "lint:fix-quiet": "eslint --quiet --fix \"src/**/*.{js,jsx,ts,tsx}\"",
     "format:check": "prettier --check \"src/**/*.{css,md,json}\"",
     "format:fix": "prettier --write \"src/**/*.{css,md,json}\"",
     "prepare": "husky install"
@@ -85,11 +86,12 @@
   },
   "husky": {
     "hooks": {
+      "commit-msg": "node .husky/commit-msg",
       "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx}": "npm run lint:fix",
+    "src/**/*.{js,jsx,ts,tsx}": "npm run lint:fix-quiet",
     "src/**/*.{css,scss,md}": "npm run format:fix"
   }
 }
