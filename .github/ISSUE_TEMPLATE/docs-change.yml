@@ -1,6 +1,5 @@
 name: 📚 Documentation Changes
 description: Use this template to register an issue for documentation changes
-title: "📚 Your text here"
 labels: [documentation, backend]
 projects: alechkos/8
 body:
