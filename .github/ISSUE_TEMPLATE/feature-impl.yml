@@ -1,6 +1,5 @@
 name: ✨ Feature Implementation
 description: Use this template to register an issue for feature implementation
-title: "✨ Your text here"
 labels: [feature, frontend]
 projects: alechkos/8
 body:
