@@ -6,6 +6,7 @@
   "type": "module",
   "husky": {
     "hooks": {
+      "commit-msg": "node .husky/commit-msg",
       "pre-commit": "yarn lint"
     }
   },
@@ -15,7 +16,8 @@
     "build": "rimraf ./build && npx tsc",
     "start": "yarn build && node build/index",
     "lint": "npx eslint ./src",
-    "format": "npx eslint ./src --fix"
+    "format": "npx eslint ./src --fix",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "",
