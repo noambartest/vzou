@@ -7,7 +7,9 @@ body:
     attributes:
       value: |
         > [!IMPORTANT]
-        > **ONCE YOU ASSIGNED YOURSELF TO THE ISSUE, THAT ISSUE WILL BE MOVED FROM `To Do` TO `In Progress` AND VICE VERSA**
+        > **ONCE YOU ASSIGNED YOURSELF TO THE ISSUE:**
+        > 1. That issue will be moved from `To Do` to `In Progress`
+        > 2. The issue's `Start date` will be set to the current date
 
         <details>
           <summary>

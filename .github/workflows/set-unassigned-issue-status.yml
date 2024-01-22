@@ -1,4 +1,4 @@
-name: Set Assigned Issue Status
+name: Set Unassigned Issue Status
 on:
   issues:
     types:
@@ -9,8 +9,8 @@ env:
 
 jobs:
   set-assigned-issue-status:
-    name: Set Assigned Issue Status
-    if: github.event.issue.assignees.length == 0
+    name: Set Unassigned Issue Status
+    if: github.event.issue.assignees[0] == null
     runs-on: ubuntu-latest
     steps:
       - name: Get Manager
