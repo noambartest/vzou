@@ -1,14 +1,14 @@
-import ApiError from '../error/ApiError.js'
 import bcrypt from 'bcrypt'
-import User from '../models/User.js'
-import { IUser, IUserLogin, IUserRegister, IUserUpdate } from '../types/UserTypes.js'
 import { NextFunction, Response } from 'express'
-import { RequestWithUser, TypedRequestBody } from '../types/RequestType.js'
 import pkg from 'jsonwebtoken'
-import { ActivityBody } from '../types/UserActivityTypes.js'
+import ApiError from '../error/ApiError.js'
+import User from '../models/User.js'
 import UserActivity from '../models/UserActivity.js'
-import { ServiceSendCode } from './TwoFactorAuthController.js'
+import { RequestWithUser, TypedRequestBody } from '../types/RequestType.js'
 import { CODE_TYPES, TWOFA_VERIFY_BODY } from '../types/TWOFA_Types.js'
+import { ActivityBody } from '../types/UserActivityTypes.js'
+import { IUser, IUserLogin, IUserRegister, IUserUpdate } from '../types/UserTypes.js'
+import { ServiceSendCode } from './TwoFactorAuthController.js'
 // Use sign from jsonwebtoken lib to generate a JWT token
 const { sign } = pkg
 
@@ -92,10 +92,11 @@ class UserController {
       if (!comparePassword) {
         return next(ApiError.forbidden('Incorrect email or password'))
       }
-      if (!user.isEmailConfirmed) {
-        await ServiceSendCode(CODE_TYPES.VERIFY_EMAIL, user.email)
-        return next(ApiError.forbidden('Verify your email first, via the link that was  sent to your email'))
-      }
+      // Disabled for development process -> uncomment this after end of the work on project!!
+      // if (!user.isEmailConfirmed) {
+      //   await ServiceSendCode(CODE_TYPES.VERIFY_EMAIL, user.email)
+      //   return next(ApiError.forbidden('Verify your email first, via the link that was  sent to your email'))
+      // }
       if (!user.isEnabled2FA) {
         const token = generateJwt(user)
 
