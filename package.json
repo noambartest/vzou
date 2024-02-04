@@ -13,6 +13,7 @@
   "scripts": {
     "test": "npx cross-env NODE_ENV=dev jest",
     "dev": "npx nodemon",
+    "dev-secondary": "nodemon --exec node --loader ts-node/esm src/index.ts",
     "build": "rimraf ./build && npx tsc",
     "start": "yarn build && node build/index",
     "lint": "npx eslint ./src",
