@@ -1,5 +1,10 @@
+import authWrapper from "components/Auth/AuthWrapper";
+
 import { BSTreeMemento } from "../../../ClassObjects/BSTreeMemento";
 import { BSTreeNode } from "../../../ClassObjects/BSTreeNode";
+import {
+  checkIfValueExist,
+} from "../../Simulation/AVL/AVL_Algorithms";
 import { ActionType } from "../BinaryTree/BinaryTreeTypes";
 import { calculateHeight } from "../BinaryTree/Helpers/Functions";
 
@@ -100,7 +105,9 @@ export function insertWithAnimations(
   root: BSTreeNode | undefined,
   new_node: BSTreeNode,
   memento: BSTreeMemento,
-): BSTreeNode {
+  isAvl = false,
+):  BSTreeNode {
+  let valueExist = false;
   const passedIds: number[] = [];
   function insertNode(root: BSTreeNode | undefined, new_node: BSTreeNode, memento: BSTreeMemento) {
     // pseudo for y
@@ -108,7 +115,13 @@ export function insertWithAnimations(
     let y = undefined as BSTreeNode | undefined;
 
     if (root) {
-      // pseudo for x = root
+      if (isAvl) {
+        valueExist = checkIfValueExist(new_node.value, root);
+        if (valueExist) {
+          throw new Error(`The node with value ${new_node.value} is exist!`);
+        }
+      }
+      // pseudo for x = roo
       memento.addSnapshot(
         { line: 2, name: "Insert" },
         root,
@@ -151,12 +164,31 @@ export function insertWithAnimations(
     }
     new_node.parent = y;
 
+    // Update the heights for AVL Tree
+    if (isAvl && y && !y.left && !y.right) {
+      x = root;
+      while (x) {
+        if (new_node.value < x.value) {
+          if (x.left && x.left.height === x.height - 1) {
+            x.height++;
+          }
+          x = x.left;
+        } else {
+          if (x.right && x.right.height === x.height - 1) {
+            x.height++;
+          }
+          x = x.right;
+        }
+      }
+      y.height++;
+    }
+
     if (y) {
       // pseudo for new_node.parent = y
       memento.addSnapshot(
         { line: 8, name: "Insert" },
         root,
-        y!.id,
+        y.id,
         ActionType.HIGHLIGHT_LIGHT,
         [],
         [],

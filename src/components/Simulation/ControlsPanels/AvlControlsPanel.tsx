@@ -9,14 +9,15 @@ import React, { FC, useEffect, useState } from "react";
 
 import { AvlAnimationController } from "../../../ClassObjects/AvlAnimationController";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
-import { setError, setInput, setInputArray } from "../../../store/reducers/alghoritms/bst-reducer";
+import { setError, setInput, setInputArray, setCurrentAlg } from "../../../store/reducers/alghoritms/bst-reducer";
 import { useRegisterActivityMutation } from "../../../store/reducers/report-reducer";
 import { AlertError } from "../../UI/Controls/AlertError";
 import { theme } from "../../UI/Controls/ControlsTheme";
 import { ControlsToolTip } from "../../UI/Controls/ControlsToolTip";
 import MediumCard from "../../UI/MediumCard";
-import { randomBuildTree } from "../AVL/AVL_Algorithms";
+import { buildTree } from "../AVL/AVL_Algorithms";
 import { generateRandomArrForHeap, getArrFromInputForHeap } from "../BinaryTree/Helpers/Functions";
+
 
 
 interface Props {
@@ -176,9 +177,10 @@ const AvlControlsPanel: FC<Props> = ({ controller, isButtonDisabled, handleHideA
     }
   };
   const randomizeInput = () => {
-    controller.setTreeFromInput([], randomBuildTree(generateRandomArrForHeap()));
+    controller.setTreeFromInput([], buildTree(generateRandomArrForHeap()));
     handleShowActions();
     setValue("2");
+    dispatch(setCurrentAlg("Min"));
   };
   useEffect(() => {
     // create a random array whenever the page is loaded.
@@ -227,30 +229,37 @@ const AvlControlsPanel: FC<Props> = ({ controller, isButtonDisabled, handleHideA
                     <Tab
                       label="Min / Max"
                       value="2"
+                      onClick={() => { dispatch(setCurrentAlg("Min")); }}
                     />
                     <Tab
                       label="Traversals"
                       value="3"
+                      onClick={() => { dispatch(setCurrentAlg("Inorder")); }}
                     />
                     <Tab
                       label="Successor"
                       value="Successor"
+                      onClick={() => { dispatch(setCurrentAlg("Successor")); }}
                     />
                     <Tab
                       label="Predecessor"
                       value="Predecessor"
+                      onClick={() => { dispatch(setCurrentAlg("Predecessor")); }}
                     />
                     <Tab
                       label="Search"
                       value="Search"
+                      onClick={() => { dispatch(setCurrentAlg("Search")); }}
                     />
                     <Tab
                       label="Insert"
                       value="Insert"
+                      onClick={() => { dispatch(setCurrentAlg("Insert")); }}
                     />
                     <Tab
                       label="Delete"
                       value="DeleteNode"
+                      onClick={() => { dispatch(setCurrentAlg("Delete")); }}
                     />
                   </TabList>}
                 </Box>
