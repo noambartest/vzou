@@ -19,11 +19,11 @@ const initialState = {
   passedNodes: [] as number[],
   traversalResults: [] as number[],
   inputValues: {
-    Successor: 1,
-    Predecessor: 2,
-    Search: 3,
-    Insert: 4,
-    DeleteNode: 5,
+    Successor: +"",
+    Predecessor: +"",
+    Search: +"",
+    Insert: +"",
+    DeleteNode: +"",
   },
 };
 

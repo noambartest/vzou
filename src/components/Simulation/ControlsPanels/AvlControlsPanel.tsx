@@ -388,13 +388,12 @@ const AvlControlsPanel: FC<Props> = ({
                     className={value === text ? "justify-start " : "hidden"}
                   >
                     <TextField
-                      sx={{ width: "100px" }}
+                      sx={{ width: "138px" }}
                       name={text as "Search" | "Insert" | "DeleteNode"}
                       size="small"
-                      value={inputValues[text as "Search" | "Insert" | "DeleteNode"]}
                       type="text"
                       variant="outlined"
-                      label={text}
+                      label={"Your value here"}
                       inputProps={{
                         min: 0,
                         max: 999,
