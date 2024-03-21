@@ -73,6 +73,21 @@ const bstSlice = createSlice({
       }
       return state;
     },
+    addToInputArray(state, action: PayloadAction<number>) {
+      state.inputArray += ", " + action.payload.toString();
+    },
+    deleteFromInputArray(state, action: PayloadAction<number>) {
+      const inputArray = state.inputArray.split(",");
+      const filteredArray = inputArray.filter((num) => +num !== action.payload);
+      state.inputArray = "";
+      filteredArray.forEach((num, index) => {
+        if (index !== filteredArray.length - 1) {
+          state.inputArray += num + ", ";
+        } else {
+          state.inputArray += num;
+        }
+      });
+    },
     clearInputArray(state) {
       state.inputArray = "";
     },
@@ -116,4 +131,6 @@ export const {
   setTraversalResults,
   setCurrentAlg,
   clearInputArray,
+  addToInputArray,
+  deleteFromInputArray,
 } = bstSlice.actions;
