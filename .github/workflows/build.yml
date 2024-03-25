@@ -10,9 +10,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.1
-        with:
-          repository: alechkos/vzou
-          path: frontend
 
       - name: Setup Node
         uses: actions/setup-node@v4.0.1
@@ -21,6 +18,7 @@ jobs:
 
       - name: Install Dependencies
         run: npm install --force
+        working-directory: frontend
 
       - name: Build Source
         run: CI='' npm run build
