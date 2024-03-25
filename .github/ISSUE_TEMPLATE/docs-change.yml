@@ -1,6 +1,6 @@
 name: 📚 Documentation Changes
 description: Use this template to register an issue for documentation changes
-labels: [documentation, frontend]
+labels: [documentation]
 projects: alechkos/8
 body:
   - type: markdown
@@ -19,7 +19,7 @@ body:
           </summary>
 
           #### The button is on the top right:
-          ![](https://github.com/alechkos/vzou-frontend/assets/93551621/d5d54ea9-aded-43ee-9f86-807c9b5ed55c)
+          ![](https://github.com/alechkos/vzou/assets/93551621/d5d54ea9-aded-43ee-9f86-807c9b5ed55c)
 
         </details>
   - type: textarea
