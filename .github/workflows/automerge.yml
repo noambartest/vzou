@@ -3,7 +3,7 @@ name: Automerge
 on:
   push:
     branches:
-      - master
+      - develop
 
 jobs:
   automerge:
