@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import React, { FC, useEffect, useState } from "react";
 
-import { AvlAnimationController } from "../../../ClassObjects/AvlAnimationController";
+import { AvlAnimationController } from "../../../ClassObjects/BST/AvlAnimationController";
 import { useAppDispatch, useAppSelector } from "../../../store/hooks";
 import {
   setError,
@@ -36,6 +36,7 @@ interface Props {
 
 const buttonClassname =
   "bg-white hover:bg-lime-100 text-lime-800 font-semibold py-2 px-2 border border-lime-600 rounded shadow disabled:opacity-50 disabled:cursor-not-allowed";
+
 /**
  * Renders the controls panel for the binary search tree.
  *
@@ -193,7 +194,7 @@ const AvlControlsPanel: FC<Props> = ({
     }
   };
   const randomizeInput = () => {
-    const randomArray = generateRandomArrForHeap();
+    const randomArray = generateRandomArrForHeap(9, 7);
     controller.setTreeFromInput([], buildTree(randomArray));
     handleShowActions();
     setValue("2");

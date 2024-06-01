@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import PhoneRotate from "../../../assets/rotateTablet.svg";
-import HeapAnimationController from "../../../ClassObjects/HeapAnimationController";
+import HeapAnimationController from "../../../ClassObjects/Heap/HeapAnimationController";
 import BinaryTree from "../../../components/Simulation/BinaryTree/BinaryTree";
 import {
   calculateHeight,
@@ -15,7 +15,6 @@ import PseudoCodeContainer from "../../../components/Simulation/PseudoCode/Pseud
 import { useAppSelector } from "../../../store/hooks";
 import SideBar from "../../../components/Layout/SideBar/SideBar";
 
-
 const HeapPage: FC = () => {
   const root = useAppSelector((state) => state.heap.root); // TODO:Randomize input
   const currentActions = useAppSelector((state) => state.heap.currentActions);
@@ -26,7 +25,7 @@ const HeapPage: FC = () => {
   const currentRoles = useAppSelector((state) => state.heap.currentRoles);
   const isPlaying = useAppSelector((state) => state.heap.isPlaying);
   const controller = HeapAnimationController.getController(currentArr, useDispatch());
-  const [ viewportWidth, setViewportWidth ] = useState(window.innerWidth);
+  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
   useEffect(() => {
     function handleResize() {
       setViewportWidth(window.innerWidth);

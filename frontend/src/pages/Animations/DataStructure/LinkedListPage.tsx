@@ -1,37 +1,32 @@
 import { FC, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-
-import PhoneRotate from "../../../assets/rotateTablet.svg";
-import { AvlAnimationController } from "../../../ClassObjects/BST/AvlAnimationController";
-import BinaryTree from "../../../components/Simulation/BinaryTree/BinaryTree";
-import {
-  calculateHeight,
-  combineBSTPseudoCodes,
-} from "../../../components/Simulation/BinaryTree/Helpers/Functions";
-import AvlControlsPanel from "../../../components/Simulation/ControlsPanels/AvlControlsPanel";
 import PlayerControlsPanel from "../../../components/Simulation/ControlsPanels/PlayerControlsPanel";
-import HeapArray from "../../../components/Simulation/Heap/HeapArray/HeapArray";
-import { PseudoItem } from "../../../components/Simulation/PseudoCode/pc-helpers";
 import PseudoCodeContainer from "../../../components/Simulation/PseudoCode/PseudoCodeContainer";
+import { PseudoItem } from "../../../components/Simulation/PseudoCode/pc-helpers";
+import PhoneRotate from "../../../assets/rotateTablet.svg";
+import LinkedListControlsPanel from "../../../components/Simulation/ControlsPanels/LinkedListControlsPanel";
+import LinkedList from "../../../components/Simulation/LinkedList/LinkedList";
 import { useAppSelector } from "../../../store/hooks";
+import { LinkedListAnimationController } from "../../../ClassObjects/LinkedList/LinkedListAnimationController";
+import { useDispatch } from "react-redux";
+import { combineLinkedListPseudoCode } from "../../../components/Simulation/LinkedList/Helpers/LinkedListHelpers";
 import SideBar from "../../../components/Layout/SideBar/SideBar";
 
-const AvlPage: FC = () => {
-  const root = useAppSelector((state) => state.bst.currentRoot);
-  const currentActions = useAppSelector((state) => state.bst.currentActions);
-  const currentAlg = useAppSelector((state) => state.bst.currentAlg);
-  const currentLine = useAppSelector((state) => state.bst.currentLine);
-  const currentRoles = useAppSelector((state) => state.bst.currentRoles);
-  const visitedNodes = useAppSelector((state) => state.bst.visitedNodes);
-  const passedNodes = useAppSelector((state) => state.bst.passedNodes);
-  const traversalResults = useAppSelector((state) => state.bst.traversalResults);
-  const isPlaying = useAppSelector((state) => state.bst.isPlaying);
-  const controller = AvlAnimationController.getController(root, useDispatch());
-  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+const LinkedListPage: FC = () => {
+  const head = useAppSelector((state) => state.linkedList.head);
+  const isPlaying = useAppSelector((state) => state.linkedList.isPlaying);
+  const currentLine = useAppSelector((state) => state.linkedList.currentLine);
+  const currentAlg = useAppSelector((state) => state.linkedList.currentAlg);
+  const currentRoles = useAppSelector((state) => state.linkedList.currentRoles);
+  const passedNodes = useAppSelector((state) => state.linkedList.passedNodes);
+  const currentActions = useAppSelector((state) => state.linkedList.currentActions);
+
+  const controller = LinkedListAnimationController.getController(head, useDispatch());
 
   const [showActions, setShowActions] = useState(false);
   const [editingConstruction, setEditingConstruction] = useState(false);
-  const [showPseudoCode, setShowPseudoCode] = useState(false); //we will show pseudocode only if we have biult our tree
+  const [showPseudoCode, setShowPseudoCode] = useState(false); //we will show pseudocode only if we have built data structure
+
+  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
 
   const handleShowActions = () => {
     setShowActions(true);
@@ -54,6 +49,7 @@ const AvlPage: FC = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
   const fitsAnimation = viewportWidth >= 1500;
 
   return (
@@ -61,9 +57,9 @@ const AvlPage: FC = () => {
       <SideBar />
       {fitsAnimation ? (
         <div className="flex flex-col items-center justify-between">
-          <AvlControlsPanel
-            isButtonDisabled={isPlaying}
+          <LinkedListControlsPanel
             controller={controller}
+            isButtonDisabled={isPlaying}
             showActions={showActions}
             handleShowActions={handleShowActions}
             handleHideActions={handleHideActions}
@@ -72,29 +68,13 @@ const AvlPage: FC = () => {
           />
           {(showActions || editingConstruction) && (
             <div className="container mx-auto max-w-7xl my-[150px]">
-              <BinaryTree
+              <LinkedList
+                head={head}
+                speed={controller.speed}
                 viewportWidth={viewportWidth}
-                root={root}
-                level={0}
-                height={calculateHeight(root)}
-                speed={controller.speed}
-                actions={currentActions}
-                roles={currentRoles}
-                isBST
-                visitedNodes={visitedNodes}
                 passedNodes={passedNodes}
-              />
-            </div>
-          )}
-          {traversalResults.length > 0 && (
-            <div className="container mx-auto max-w-7xl px-0 py-0">
-              <p className="mr-56">
-                <b>Traversal Results</b>
-              </p>
-              <HeapArray
-                items={traversalResults}
+                roles={currentRoles}
                 actions={currentActions}
-                speed={controller.speed}
               />
             </div>
           )}
@@ -109,7 +89,7 @@ const AvlPage: FC = () => {
               <div className=" w-fit">
                 <PseudoCodeContainer
                   line={currentLine}
-                  code={combineBSTPseudoCodes(currentAlg) as PseudoItem[]}
+                  code={combineLinkedListPseudoCode(currentAlg) as PseudoItem[]}
                 />
               </div>
             </div>
@@ -133,4 +113,4 @@ const AvlPage: FC = () => {
   );
 };
 
-export default AvlPage;
+export default LinkedListPage;

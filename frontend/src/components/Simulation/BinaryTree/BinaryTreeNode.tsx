@@ -8,7 +8,6 @@ import { getAnimationsAndStyles } from "./Helpers/Functions";
 
 import { NodeObj } from "../../../ClassObjects/NodeObj";
 
-
 interface BinaryTreeNodeProps {
   nodeObj: NodeObj;
 }
@@ -17,7 +16,7 @@ const BinaryTreeNode: FC<BinaryTreeNodeProps> = ({ nodeObj }) => {
   const { initial, animate, style } = getAnimationsAndStyles(
     nodeObj.action,
     nodeObj.swapPosition,
-    nodeObj.position,
+    nodeObj.position
   );
   let animateObj;
   if (nodeObj.isPassed || nodeObj.isVisited) {
