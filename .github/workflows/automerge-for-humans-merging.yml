@@ -58,7 +58,7 @@ jobs:
                 | map(select(.login != "${{github.event.pull_request.user.login}}")) 
                 | unique 
                 | map("Co-authored-by: " + .name + " <" + .email + ">") 
-                | join("\\n")'
+                | join("\n")'
           multiline: true
       - name: Show authors
         run: |
