@@ -1,5 +1,3 @@
-# See https://github.com/asyncapi/.github/blob/master/.github/workflows/automerge-for-humans-merging.yml
-
 name: Automerge PR
 
 on:
@@ -20,60 +18,90 @@ jobs:
     if: github.event.pull_request.draft == false && (github.event.pull_request.user.login != 'dependabot[bot]' || github.event.pull_request.user.login != 'dependabot-preview[bot]')
     runs-on: ubuntu-latest
     steps:
-      - name: Get list of authors
-        uses: sergeysova/jq-action@v2
-        id: authors
+      - name: Checkout
+        uses: actions/checkout@v4.1.7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4.0.2
         with:
-          # This cmd does following (line by line):
-          # 1. CURL querying the list of commits of the current PR via GH API. Why? Because the current event payload does not carry info about the commits.
-          # 2. Iterates over the previous returned payload, and creates an array with the filtered results (see below) so we can work with it later. An example of payload can be found in https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#webhook-payload-example-34.
-          # 3. Grabs the data of commit author we need for adding the `Co-authored-by: ...` lines later and puts it into objects to be used later on.
-          # 4. Grabs the data of co-authors in each commit using the regex and puts it into objects to be used later on.
-          # 5. Combine the committer and co-authors arrays. Then flatten the resulting array of arrays into a single array.
-          # 6. Filters the results by excluding the current PR author. We don't need to add it as co-author since is the PR creator and it will become by default the main author.
-          # 7. Removes repeated authors and co-authors (may have multiple commits in the PR, potentially with different co-authors).
-          # 8. Builds the `Co-authored-by: ...` lines with actual info.
-          # 9. Transforms the array into plain text. Thanks to this, the actual stdout of this step can be used by the next workflow step (which is basically the automerge).
-          cmd: |
-            curl -H "Accept: application/vnd.github+json" -H "Authorization: Bearer ${{ secrets.AUTH_TOKEN }}" "${{github.event.pull_request._links.commits.href}}?per_page=100" | 
-              jq -r '[.[] 
-                |
-                {
-                  committer: {
-                    name: .commit.author.name,
-                    email: .commit.author.email,
-                    login: .author.login
-                  },
-                  coauthors: (
-                    .commit.message
-                    | capture("(?<coauthors>(Co-authored-by: [^\n]+(\nCo-authored-by: [^\n]+)*))?"; "g")?
-                    | .coauthors // ""
-                    | split("\n")
-                    | map(select(length > 0)
-                    | capture("Co-authored-by: (?<name>[^<]+) <(?<email>[^>]+)>")
-                    | {name: .name, email: .email})
-                  )
+          node-version: '20'
+
+      - name: Get list of authors
+        id: authors
+        uses: actions/github-script@v7.0.1
+        with:
+          script: |
+            async function getCoAuthors() {
+              try {
+                const { owner, repo } = context.repo;
+                const pull_number = context.issue.number;
+            
+                const commits = await github.paginate("GET /repos/{owner}/{repo}/pulls/{pull_number}/commits", {
+                  owner,
+                  repo,
+                  pull_number,
+                  per_page: 100
+                });
+            
+                let authors = [];
+  
+                for (const item of commits) {
+                  const committer = {
+                    name: item.commit.author.name,
+                    email: item.commit.author.email
+                  };
+  
+                  const coAuthors = [];
+                  const coAuthorRegex = /Co-authored-by:\s*(.+?)\s*<(.+?)>/g;
+  
+                  let match;
+                  
+                  while ((match = coAuthorRegex.exec(item.commit.message)) !== null) {
+                    coAuthors.push({
+                      name: match[1],
+                      email: match[2]
+                    });
+                  }
+  
+                  authors.push(committer);
+                  authors.push(...coAuthors);
                 }
-                | [.committer] + .coauthors] | flatten
-                | map(select(.login != "${{github.event.pull_request.user.login}}")) 
-                | unique 
-                | map("Co-authored-by: " + .name + " <" + .email + ">") 
-                | join("\n")'
-          multiline: true
+  
+                authors = authors.filter((x) => x.email !== commits[0].commit.author.email);
+  
+                const seen = new Set();
+                authors = authors.filter((item) => {
+                  const duplicate = seen.has(item.email);
+                  seen.add(item.email);
+                  return !duplicate;
+                });
+  
+                authors = authors.map((x) => `Co-authored by: ${x.name} <${x.email}>`).join('\n');
+                console.log(authors);
+  
+                return authors;
+              }
+              catch (e) {
+                console.error('GetCoAuthorsError: ', e);
+                return null;
+              }
+            }
+
+            const authors = await getCoAuthors();
+            core.setOutput("value", authors);
       - name: Show authors
         run: |
           echo "${{ steps.authors.outputs.value }}"
+
       - name: Automerge
-        uses: pascalgn/automerge-action@v0.16.3
         id: automerge
+        uses: pascalgn/automerge-action@v0.16.3
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           MERGE_LABELS: ""
           MERGE_METHOD: "squash"
           MERGE_REQUIRED_APPROVALS: 2
           UPDATE_LABELS: ""
-          # Using the output of the previous step (`Co-authored-by: ...` lines) as commit description.
-          # Important to keep 2 empty lines as https://docs.github.com/en/pull-requests/committing-changes-to-your-project/creating-and-editing-commits/creating-a-commit-with-multiple-authors#creating-co-authored-commits-on-the-command-line mentions
           MERGE_COMMIT_MESSAGE: "{pullRequest.title} (#{pullRequest.number})\n\n\n${{ steps.authors.outputs.value }}"
           MERGE_DELETE_BRANCH: true
           MERGE_RETRIES: "20"
