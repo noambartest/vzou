@@ -10,6 +10,8 @@ import treeGif from "../../assets/Gallery/treeGif.gif";
 import treePhoto from "../../assets/Gallery/treePhoto.png";
 import linkedListPhoto from "../../assets/Gallery/LinkedListPhoto.png";
 import linkedListGif from "../../assets/Gallery/LinkedListGif.gif";
+import bfsPhoto from "../../assets/Gallery/bfsPhoto.png";
+import bfsGif from "../../assets/Gallery/bfsGif.gif";
 import hashTablePhoto from "../../assets/Gallery/HashTablePhoto.png";
 import hashTableGif from "../../assets/Gallery/HashTableGif.gif";
 import { RoutePaths } from "../../Routes/RoutePaths";
@@ -92,6 +94,12 @@ const HomePageData = [
     gif: hashTableGif,
     image: hashTablePhoto,
     url: RoutePaths.HASH_TABLE,
+  },
+  {
+    title: "DFS",
+    gif: bfsGif,
+    image: bfsPhoto,
+    url: RoutePaths.DFS,
   },
 ];
 
