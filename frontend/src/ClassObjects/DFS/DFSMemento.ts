@@ -2,13 +2,15 @@ import { Memento } from "../Memento";
 import { NodeRole } from "../../components/Simulation/BinaryTree/BinaryTreeTypes";
 import { ActionType } from "../../components/Simulation/BinaryTree/BinaryTreeTypes";
 import { DFSNode } from "./DFSNode";
+import { TableDataType } from "../../types/GraphTypes";
+import { GraphNode } from "../GraphNode";
 
-export class DFSMemento extends Memento<DFSNode | undefined, string> {
+export class DFSMemento extends Memento<GraphNode | undefined, string> {
   visitedNodesSnapshots: number[][];
 
   passedNodesSnapshots: number[][];
 
-  tableData: { id: number; data: { color: string; pi: number; d: number; f: number } }[][];
+  tableData: TableDataType[];
 
   constructor() {
     super("Search");
@@ -26,12 +28,12 @@ export class DFSMemento extends Memento<DFSNode | undefined, string> {
 
   addBlank(
     codeRef: any,
-    node: DFSNode | undefined,
+    node: GraphNode | undefined,
     heapSize?: number,
     nodeRoles: NodeRole[] = [],
     visitedNodes: number[] = [],
     passedNodes: number[] = [],
-    tableData: { id: number; data: { color: string; pi: number; d: number; f: number } }[] = []
+    tableData: TableDataType = []
   ) {
     this.snapshots.push({
       actions: [],
@@ -46,12 +48,12 @@ export class DFSMemento extends Memento<DFSNode | undefined, string> {
 
   addError(
     codeRef: any,
-    node: DFSNode | undefined,
+    node: GraphNode | undefined,
     error: string,
     nodeRoles: NodeRole[] = [],
     visitedNodes: number[] = [],
     passedNodes: number[] = [],
-    tableData: { id: number; data: { color: string; pi: number; d: number; f: number } }[] = []
+    tableData: TableDataType = []
   ) {
     this.snapshots.push({
       actions: [{ action: ActionType.ERROR, item: -1, error }],
@@ -70,13 +72,13 @@ export class DFSMemento extends Memento<DFSNode | undefined, string> {
 
   addSnapshot(
     codeRef: any,
-    node: DFSNode | undefined,
+    node: GraphNode | undefined,
     index: number,
     action: ActionType,
     nodeRoles: NodeRole[] = [],
     visitedNodes: number[] = [],
     passedNodes: number[] = [],
-    tableData: { id: number; data: { color: string; pi: number; d: number; f: number } }[] = []
+    tableData: TableDataType = []
   ) {
     this.snapshots.push({
       actions: [{ action, item: index }],

@@ -16,20 +16,21 @@ import {
   setTableData,
 } from "../../store/reducers/alghoritms/dfs-reducer";
 import { dfsAnimation, buildDFSNodes } from "./DFSAlgorithms";
-import { graphType } from "../../types/GraphTypes";
+import { graphType, TableDataType } from "../../types/GraphTypes";
 import { DFSNode } from "./DFSNode";
+import { GraphNode } from "../GraphNode";
 
-export class DFSAnimationController extends AnimationController<DFSNode | undefined, string> {
+export class DFSAnimationController extends AnimationController<GraphNode | undefined, string> {
   private static dfsController: DFSAnimationController | null = null;
 
   graphNodes: DFSNode[];
 
-  private constructor(node: DFSNode | undefined, dispatch: AppDispatch) {
+  protected constructor(node: GraphNode | undefined, dispatch: AppDispatch) {
     super(dispatch, new DFSMemento(), node);
     this.graphNodes = [];
   }
 
-  static getController(root: DFSNode | undefined, dispatch: AppDispatch): DFSAnimationController {
+  static getController(root: GraphNode | undefined, dispatch: AppDispatch): DFSAnimationController {
     if (!this.dfsController) this.dfsController = new DFSAnimationController(root, dispatch);
     return this.dfsController;
   }
@@ -42,8 +43,8 @@ export class DFSAnimationController extends AnimationController<DFSNode | undefi
     this.dispatch(setPlaying(value));
   }
 
-  setHead(node: DFSNode | undefined) {
-    this.dispatch(setInitialNode(node));
+  setHead(node: GraphNode | undefined) {
+    this.dispatch(setInitialNode(node as DFSNode));
   }
 
   setCurrentRoles(roles: NodeRole[]) {
@@ -66,9 +67,7 @@ export class DFSAnimationController extends AnimationController<DFSNode | undefi
     this.dispatch(setVisitedNodes(visitedNodes));
   }
 
-  setTableData(
-    tableData: { id: number; data: { color: string; pi: number; d: number; f: number } }[]
-  ) {
+  setTableData(tableData: TableDataType) {
     this.dispatch(setTableData(tableData));
   }
 
@@ -84,7 +83,7 @@ export class DFSAnimationController extends AnimationController<DFSNode | undefi
     this.setTableData([]);
   }
 
-  initData(data: DFSNode | undefined) {
+  initData(data: GraphNode | undefined) {
     this.setReference({ name: this.memento.getCurrentAlg(), line: 0 });
     this.setHead(data);
     this.setCurrentActions([]);

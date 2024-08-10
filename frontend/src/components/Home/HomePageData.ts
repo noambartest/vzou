@@ -12,8 +12,12 @@ import linkedListPhoto from "../../assets/Gallery/LinkedListPhoto.png";
 import linkedListGif from "../../assets/Gallery/LinkedListGif.gif";
 import bfsPhoto from "../../assets/Gallery/bfsPhoto.png";
 import bfsGif from "../../assets/Gallery/bfsGif.gif";
+import dfsPhoto from "../../assets/Gallery/DFSPhoto.png";
+import dfsGif from "../../assets/Gallery/DFSGif.gif";
 import hashTablePhoto from "../../assets/Gallery/HashTablePhoto.png";
 import hashTableGif from "../../assets/Gallery/HashTableGif.gif";
+import BFImage from "../../assets/Gallery/BFImage.png";
+import BFGif from "../../assets/Gallery/BFGif.gif";
 import { RoutePaths } from "../../Routes/RoutePaths";
 
 const sortTypes = [
@@ -97,9 +101,15 @@ const HomePageData = [
   },
   {
     title: "DFS",
-    gif: bfsGif,
-    image: bfsPhoto,
+    gif: dfsGif,
+    image: dfsPhoto,
     url: RoutePaths.DFS,
+  },
+  {
+    title: "Bellman-Ford",
+    gif: BFGif,
+    image: BFImage,
+    url: RoutePaths.BELLMAN_FORD,
   },
 ];
 
