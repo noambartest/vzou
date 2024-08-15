@@ -31,15 +31,15 @@ import {
   setTo,
   setWeight,
   deleteInputData,
-} from "../../../store/reducers/alghoritms/bellmanFord-reducer";
+} from "../../../store/reducers/alghoritms/prim-reducer";
 import { useRegisterActivityMutation } from "../../../store/reducers/report-reducer";
 import { DFSItemObj } from "../../../ClassObjects/DFS/DFSItemObj";
 import CasinoIcon from "@mui/icons-material/Casino";
-import { BellmanFordAnimationController } from "../../../ClassObjects/BellmanFord/BellmanFordAnimationController";
-import { BellmanFordNode } from "../../../ClassObjects/BellmanFord/BellmanFordNode";
+import { PrimAnimationController } from "../../../ClassObjects/Prim/PrimAnimationController";
+import { PrimNode } from "../../../ClassObjects/Prim/PrimNode";
 
 interface Props {
-  controller: BellmanFordAnimationController;
+  controller: PrimAnimationController;
   showActions: boolean;
   handleShowActions: () => void;
   handleHideActions: () => void;
@@ -50,7 +50,7 @@ interface Props {
 const buttonClassname =
   "bg-white hover:bg-lime-100 text-lime-800 font-semibold py-2 px-2 border border-lime-600 rounded shadow disabled:opacity-50 disabled:cursor-not-allowed";
 
-const BellmanFordControlPanel: FC<Props> = ({
+const PrimControlPanel: FC<Props> = ({
   handleHideActions,
   handleShowActions,
   showActions,
@@ -59,17 +59,17 @@ const BellmanFordControlPanel: FC<Props> = ({
   controller,
 }) => {
   const [regsterActivity] = useRegisterActivityMutation();
-  const inputArray = useAppSelector((state) => state.bellmanFord.inputArray);
-  const error = useAppSelector((state) => state.bellmanFord.error);
-  const isButtonDisabled = useAppSelector((state) => state.bellmanFord.isPlaying);
-  const directed = useAppSelector((state) => state.bellmanFord.directed);
-  const graphData = useAppSelector((state) => state.bellmanFord.graphData);
-  const rowCount = useAppSelector((state) => state.bellmanFord.countRows);
-  const inputData = useAppSelector((state) => state.bellmanFord.inputData);
-  const from = useAppSelector((state) => state.bellmanFord.from);
-  const to = useAppSelector((state) => state.bellmanFord.to);
-  const weight = useAppSelector((state) => state.bellmanFord.weight);
-  const startNode = useAppSelector((state) => state.bellmanFord.initialNode);
+  const inputArray = useAppSelector((state) => state.prim.inputArray);
+  const error = useAppSelector((state) => state.prim.error);
+  const isButtonDisabled = useAppSelector((state) => state.prim.isPlaying);
+  const directed = useAppSelector((state) => state.prim.directed);
+  const graphData = useAppSelector((state) => state.prim.graphData);
+  const rowCount = useAppSelector((state) => state.prim.countRows);
+  const inputData = useAppSelector((state) => state.prim.inputData);
+  const from = useAppSelector((state) => state.prim.from);
+  const to = useAppSelector((state) => state.prim.to);
+  const weight = useAppSelector((state) => state.prim.weight);
+  const startNode = useAppSelector((state) => state.prim.initialNode);
   const dispatch = useAppDispatch();
 
   const [value, setValue] = useState("1");
@@ -157,8 +157,8 @@ const BellmanFordControlPanel: FC<Props> = ({
   };
 
   const handleDeleteValues = (event: any, index: number) => {
-    dispatch(deleteInputData(index));
     controller.setGraphFromInput({ nodes: [], links: [] });
+    dispatch(deleteInputData(index));
   };
 
   const handleChangeSelect = (event: any) => {
@@ -183,7 +183,7 @@ const BellmanFordControlPanel: FC<Props> = ({
       switch (animation) {
         case "Search":
           regsterActivity({
-            subject: "BellmanFord",
+            subject: "Prim",
             algorithm: "Search",
           });
           const initialNode = graphData.nodes.find((data) => data === Number(initialNodeInput));
@@ -193,10 +193,10 @@ const BellmanFordControlPanel: FC<Props> = ({
             return;
           }
           dispatch(
-            setInitialNode(new BellmanFordNode(Number(initialNodeInput), Number(initialNodeInput)))
+            setInitialNode(new PrimNode(Number(initialNodeInput), Number(initialNodeInput)))
           );
 
-          await controller.bellmanFordAnimation(Number(initialNodeInput), graphData.links);
+          await controller.primAnimation(Number(initialNodeInput), graphData.links);
           return;
         case "Clear":
           dispatch(clearInputArray());
@@ -342,7 +342,7 @@ const BellmanFordControlPanel: FC<Props> = ({
                   >
                     {!showActions && !editingConstruction && (
                       <Tab
-                        label={"Create Graph For Bellman Ford"}
+                        label={"Create Graph For Prim"}
                         value="1"
                         disabled={isButtonDisabled}
                       />
@@ -537,4 +537,4 @@ const BellmanFordControlPanel: FC<Props> = ({
   );
 };
 
-export default BellmanFordControlPanel;
+export default PrimControlPanel;
