@@ -40,6 +40,7 @@ export enum RoutePaths {
   DFS = "/dfs",
   BELLMAN_FORD = "/bellman-ford",
   PRIM = "/prim",
+  KRUSKAL = "/kruskal",
 
   // feedbacks
   POST_FEEDBACK = "/post-feedback",

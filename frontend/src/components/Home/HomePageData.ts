@@ -104,6 +104,13 @@ const HomePageData = [
     type: "Graph",
   },
   {
+    title: "Kruskal",
+    gif: BFGif,
+    image: BFImage,
+    url: RoutePaths.KRUSKAL,
+    type: "Graph",
+  },
+  {
     title: "Insertion Sort",
     gif: insertionSortGif,
     image: insertionSortImg,
