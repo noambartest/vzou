@@ -37,6 +37,8 @@ export enum RoutePaths {
   MERGE_SORT = "/mergesort",
   BUCKET_SORT = "/bucketsort",
   RADIX_SORT = "/radixsort",
+  BFS = "/bfs",
+  DJIKSTRA = "/djikstra",
   DFS = "/dfs",
   BELLMAN_FORD = "/bellman-ford",
   PRIM = "/prim",

@@ -29,6 +29,8 @@ import RegisterLecturerPage from "../pages/RegisterLecturerPage";
 import RegistrationPage from "../pages/RegistrationPage";
 import TwoFactorAuthPage from "../pages/TwoFactorAuthPage";
 import LinkedListPage from "../pages/Animations/DataStructure/LinkedListPage";
+import BfsPage from "../pages/Animations/DataStructure/BfsPage";
+import DjikstraPage from "../pages/Animations/DataStructure/DjikstraPage";
 import DFSPage from "../pages/Animations/DataStructure/DFSPage";
 import HashTablePage from "../pages/Animations/DataStructure/HashTablePage";
 import BellmanFordPage from "../pages/Animations/DataStructure/BellmanFordPage";
@@ -80,6 +82,8 @@ export const userRoutes: RouteItem[] = [
   { path: RoutePaths.MERGE_SORT, element: MergeSortPage },
   { path: RoutePaths.BUCKET_SORT, element: BucketSortPage },
   { path: RoutePaths.RADIX_SORT, element: RadixSortPage },
+  { path: RoutePaths.BFS, element: BfsPage },
+  { path: RoutePaths.DJIKSTRA, element: DjikstraPage },
   { path: RoutePaths.DFS, element: DFSPage },
   { path: RoutePaths.BELLMAN_FORD, element: BellmanFordPage },
   { path: RoutePaths.PRIM, element: PrimPage },

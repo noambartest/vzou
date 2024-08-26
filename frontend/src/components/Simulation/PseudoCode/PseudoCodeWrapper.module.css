@@ -66,14 +66,27 @@
   z-index: 1000;
 }
 .hamburgerWrapper2 {
-  position: absolute;
-  top: -560px;
+  position: fixed;
+  top: 100px;
   right: 10px;
   z-index: 1000;
 }
 
 .tableWrapper {
   position: absolute;
+  top: 410px; /* Setting the value for moving the table vertically */
+  right: 290px; /* Setting the value for moving the table horizontally */
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.tableWrapperDjikstra {
+  position: absolute;
+  top: 310px; /* Setting the value for moving the table vertically */
+  right: 230px; /* Setting the value for moving the table horizontally */
   top: 500px; /* Setting the value for moving the table vertically */
   right: 300px; /* Setting the value for moving the table horizontally */
   background-color: white;
@@ -111,4 +124,10 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   background-color: #f9f9f9;
+}
+
+/* В файле styles.module.css */
+.highlightedNode {
+  stroke: yellow;
+  stroke-width: 3px;
 }

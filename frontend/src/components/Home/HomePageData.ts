@@ -11,6 +11,8 @@ import treePhoto from "../../assets/Gallery/treePhoto.png";
 import linkedListPhoto from "../../assets/Gallery/LinkedListPhoto.png";
 import linkedListGif from "../../assets/Gallery/LinkedListGif.gif";
 import bfsPhoto from "../../assets/Gallery/bfsPhoto.png";
+import djikstraPhoto from "../../assets/Gallery/DjikstraPhoto.png";
+import djikstraGif from "../../assets/Gallery/djikstraGif.gif";
 import bfsGif from "../../assets/Gallery/bfsGif.gif";
 import dfsPhoto from "../../assets/Gallery/DFSPhoto.png";
 import dfsGif from "../../assets/Gallery/DFSGif.gif";
@@ -151,6 +153,20 @@ const HomePageData = [
     image: radixSortImg,
     url: RoutePaths.RADIX_SORT,
     type: "Sort",
+  },
+  {
+    title: "BFS",
+    gif: bfsGif,
+    image: bfsPhoto,
+    url: RoutePaths.BFS,
+    type: "Graph"
+  },
+  {
+    title: "Djikstra",
+    gif: djikstraGif,
+    image: djikstraPhoto,
+    url: RoutePaths.DJIKSTRA,
+    type: "Graph"
   },
 ];
 
