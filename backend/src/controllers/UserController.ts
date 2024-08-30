@@ -92,11 +92,10 @@ class UserController {
       if (!comparePassword) {
         return next(ApiError.forbidden('Incorrect email or password'))
       }
-      // Disabled for development process -> uncomment this after end of the work on project!!
-      // if (!user.isEmailConfirmed) {
-      //   await ServiceSendCode(CODE_TYPES.VERIFY_EMAIL, user.email)
-      //   return next(ApiError.forbidden('Verify your email first, via the link that was  sent to your email'))
-      // }
+      if (!user.isEmailConfirmed) {
+        await ServiceSendCode(CODE_TYPES.VERIFY_EMAIL, user.email)
+        return next(ApiError.forbidden('Verify your email first, via the link that was  sent to your email'))
+      }
       if (!user.isEnabled2FA) {
         const token = generateJwt(user)
 

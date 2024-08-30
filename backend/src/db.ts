@@ -3,14 +3,14 @@ import { Sequelize } from 'sequelize'
 
 dotenv.config()
 
-
+const DB_NAME = process.env.NODE_ENV === 'dev' ?process.env.TEST_DB_NAME!: process.env.DB_NAME!
 export const sequelize = new Sequelize(
-  'avds', //enter you local db name
-  'postgres', // do no touch
-  process.env.TEST_DB_PASSWORD, // enter your local db password
-  {
-    dialect: 'postgres',
-    host: 'localhost',
-    port: 5432
-  }
+    DB_NAME,
+    process.env.DB_USER!,
+    process.env.DB_PASSWORD,
+    {
+        dialect: 'postgres',
+        host: process.env.DB_HOST,
+        port: 5432
+    }
 )

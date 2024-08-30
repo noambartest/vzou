@@ -10,6 +10,7 @@
     "dev2": "npm run dev-secondary",
     "dev-secondary": "nodemon --exec node --loader ts-node/esm src/index.ts",
     "build": "rimraf ./build && npx tsc",
+    "release": "yarn start",
     "start": "yarn build && node build/index",
     "lint": "npx eslint ./src",
     "format": "npx eslint ./src --fix"

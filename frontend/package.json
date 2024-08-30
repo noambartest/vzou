@@ -52,7 +52,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "release": "serve -s build --listen 443 --ssl-cert \"../certificate/STAR_sce-fpm_com.crt\" --ssl-key  \"../certificate/STAR_sce-fpm_com.key\""
   },
   "browserslist": {
     "production": [
