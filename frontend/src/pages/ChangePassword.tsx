@@ -19,6 +19,8 @@ export enum Stage {
   INPUT_NEW_PASSWORD = 2,
 }
 
+/* just comment*/
+
 const titles = [ "The code will be sent to your email", "Enter the code that was sent to your email", "Enter your new password" ];
 function ForgotPasswordPage() {
   /* The Content card state represents the user's stage in changing the password
